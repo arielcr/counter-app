@@ -1,43 +1,41 @@
 import React, { Component } from "react";
 
 class Counter extends Component {
-  state = {
-    value: this.props.value
-  };
+  // --- AJAX call to make new request to the server based on the changes on props and states
+  componentDidUpdate(prevProps, prevState) {}
 
-  product = {
-    id: 1,
-    count: 5
-  };
-
-  handleIncrement = product => {
-    console.log(product);
-    this.setState({ count: this.state.value + product.count });
-  };
-
-  getBadgeClasses() {
-    let classes = "badge m-2 badge-";
-    classes += this.state.value === 0 ? "warning" : "primary";
-    return classes;
-  }
-
-  formatCount() {
-    const { value: count } = this.state;
-    return count === 0 ? "Zero" : count;
-  }
+  // --- Do any kind of clean up
+  componentWillUnmount() {}
 
   render() {
     return (
       <div>
         <span className={this.getBadgeClasses()}>{this.formatCount()}</span>
         <button
-          onClick={() => this.handleIncrement(this.product)}
+          onClick={() => this.props.onIncrement(this.props.counter)}
           className="btn btn-secondary btn-sm"
         >
           Increment
         </button>
+        <button
+          onClick={() => this.props.onDelete(this.props.counter.id)}
+          className="btn btn-danger btn-sm m-2"
+        >
+          Delete
+        </button>
       </div>
     );
+  }
+
+  getBadgeClasses() {
+    let classes = "badge m-2 badge-";
+    classes += this.props.counter.value === 0 ? "warning" : "primary";
+    return classes;
+  }
+
+  formatCount() {
+    const { value: count } = this.props.counter;
+    return count === 0 ? "Zero" : count;
   }
 }
 
